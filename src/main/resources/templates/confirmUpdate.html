@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>ユーザ更新確認</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body class="m-3">
+
+<h1>ユーザ更新確認</h1>
+
+<table class="table">
+  <tbody>
+  <tr>
+    <th scope="row">ユーザID</th>
+    <td>[[${uid}]]</td>
+  </tr>
+  <tr>
+    <th scope="row">ニックネーム</th>
+    <td>[[${nickname}]]</td>
+  </tr>
+  <tr>
+    <th scope="row">パスワード</th>
+    <td>[[${password}]]</td>
+  </tr>
+  </tbody>
+</table>
+
+<form class="mb-3" method="post" th:action="@{/user/__${uid}__/update}">
+  <input name="nickname" th:value="${nickname}" type="hidden">
+  <input name="password" th:value="${password}" type="hidden">
+  <input class="btn btn-primary" type="submit" value="更新する">
+</form>
+
+<form method="get" th:action="@{/user/information}">
+  <input name="uid" th:value="${uid}" type="hidden">
+  <input class="btn btn-warning" type="submit" value="やめる">
+</form>
+
+</body>
+</html>

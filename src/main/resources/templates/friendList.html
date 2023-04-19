@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>友達リスト</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body class="m-3">
+
+<h1>現在の友達リストです。</h1>
+
+
+
+<form method="post" th:action="@{/__${uid}__/friend/input}"
+      th:object="${friendForm}">
+  <label class="form-label" for="relationship">1~3を入力してください（1.家族・2.友達・3.介護者）</label>
+  <div class="mb-3 input-group">
+    <input class="form-control" max="3" min="1"
+           placeholder="1から3まで" required
+           th:field="*{relationship}" type="number">
+  </div>
+  <div class="mb-3">
+    <input class="form-control" placeholder="相手のID" th:field="*{fid}"
+         required  type="text">
+  </div>
+  <div class="mb-3">
+    <input class="btn btn-primary" type="submit" value="フォローする">
+  </div>
+</form>
+
+<table class="table mb-3" border="1">
+    <thead>
+    <tr align="center">
+      <th>フォロー</th>
+      <th>関係</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr th:each="log:${logs}" align="center">
+     
+    <td th:text="${log.fNickname}"></td>
+    <td th:text="${log.relation}"></td>
+  </tr>
+    </tbody>
+  </table>
+
+  <table class="table mb-3" border="1">
+    <thead>
+    <tr align="center">
+      <th>フォロワー</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr th:each="flog:${flogs}" align="center">
+    <td th:text="${flog.followerNickname}"></td>
+  </tr>
+    </tbody>
+  </table>
+
+
+
+
+
+<form method="get" th:action="@{/}">
+  <input class="btn btn-warning" type="submit" value="終了">
+</form>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>フォロー確認</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body class="m-3">
+
+<h1>フォローユーザー確認</h1>
+
+<img th:src="@{/images/nene_happy.png}" width="100" class="mb-3">
+
+<table class="table">
+  <tbody>
+  <tr>
+    <th scope="row">フォローするID</th>
+    <td>[[${fid}]]</td>
+  </tr>
+  <tr>
+    <th scope="row">ニックネーム</th>
+    <td>[[${nickname}]]</td>
+  </tr>
+  <tr>
+    <th scope="row">関係</th>
+    <td>[[${relationship}]]</td>
+  </tr>
+  </tbody>
+</table>
+
+<form method="post" th:action="@{/friend/input}" class="mb-3">
+  <input type="hidden" name="fid" th:value="${fid}">
+  <input type="hidden" name="nickname" th:value="${nickname}">
+  <input type="hidden" name="relationship" th:value="${relationship}">
+  <input type="submit" class="btn btn-primary" value="フォローする">
+</form>
+
+
+<form method="get" th:action="@{/friend}">
+  <input type="submit" class="btn btsn-warning" value="やめる">
+</form>
+
+</body>
+</html>

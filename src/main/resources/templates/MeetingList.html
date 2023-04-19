@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>会議リスト</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">     
+</head>
+
+<body class="m-3">
+
+    <h1>現在の会議リストです。</h1>
+    
+    
+    
+    <form method="post" th:action="@{/__${uid}__/meeting/input}"
+          th:object="${meetingForm}">
+      <label class="form-label" for="pid">お相手を選択してください</label>
+      <div class="mb-3">
+    
+        <label th:each="item:${UserCheckBox}" >
+        <input type="checkbox" name="selectedUsers"
+               placeholder="相手を選択してください" 
+               th:value="${item.key}" th:text="${item.value}"
+               th:field="*{pid}" >
+        </label>
+    
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="starttime">会議の予定日時を入力してください</label>
+        <input th:field="*{starttime}" required type="datetime-local">
+      </div>
+      <div class="mb-3">
+        <input class="btn btn-primary" type="submit" value="会議設定する">
+      </div>
+    </form>
+    
+  <!-- 会議の表を提示する。（主催者の名前・参加者の名前・会議のリンク・会議の時間を提示する） -->
+  <h3>自分が主催したミーティング</h3>  
+  <table class="table mb-3" border="1">
+    <thead>
+    <tr align="center">
+      <th>主催者の名前</th>
+      <th>招待者の名前</th>
+      <th>会議のリンク</th>
+      <th>会議の開始時間</th>
+      <th>招待者の参加承認状況</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr th:each="mlog:${meetingLogs}" align="center">
+     
+    <td th:text="${mlog.hostname}"></td>
+    <td th:text="${mlog.membername}"></td>
+    <td><a th:href="${mlog.link}">参加URL</a></td>
+    <td th:text="${mlog.starttime}"></td>
+    <td th:each="state: ${mlog.states}">
+      [[${state.key}]] : [[${state.value}]]
+    </td>
+  </tr>
+    </tbody>
+  </table>
+
+    <h3>招待されたミーティング</h3>
+    <table class="table mb-3" border="1">
+      <thead>
+      <tr align="center">
+        <th>主催者の名前</th>
+        <th>招待者の名前</th>
+        <th>会議のリンク</th>
+        <th>会議の開始時間</th>
+        <th>参加しますか？</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr th:each="plog:${invitedLogs}" align="center">
+       
+      <td th:text="${plog.hostname}"></td>
+      <td th:text="${plog.membername}"></td>
+      <td><a th:href="${plog.link}">参加URL</a></td>
+      <td th:text="${plog.starttime}"></td>
+      <td>
+        <form method="post" th:action="@{/__${uid}__/meeting/__${plog.groupid}__/conduct}"
+        th:object="${conductForm}">
+        <input type="radio" name="conduct" th:value=1 th:field="*{state}">承認
+        <input type="radio" name="conduct" th:value=2 th:field="*{state}">拒否
+        <input type="hidden" name="pid" th:value="${plog.pid}">
+        <input type="hidden" name="zoomid" th:value="${plog.zoomid}">
+        <div class="mb-3">
+          <input class="btn btn-primary" type="submit" value="送信">
+        </div>
+        </form>
+      </td>
+    </tr>
+      </tbody>
+    </table>
+
+    
+    
+    <form method="get" th:action="@{/}">
+      <input class="btn btn-warning" type="submit" value="終了">
+    </form>
+    </body>
+    </html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>ユーザ情報確認</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body class="m-3">
+
+<h1>ユーザ情報確認</h1>
+
+
+<h2 th:if="${isUserAlreadyExistsError}" class="text-danger">ユーザが登録済みです</h2>
+<h2 th:if="${isUserFormError}" class="text-danger">ユーザの更新情報が誤っています</h2>
+
+<form method="get" th:action="@{/user/__${uid}__/update/confirm}">
+  <div class="mb-3">
+    <label class="form-label" for="uid">ユーザID(変更できません)</label>
+    <input class="form-control" id="uid" name="uid" readonly
+           th:value="${uid}"
+           type="text">
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="nickname">ニックネーム</label>
+    <input class="form-control" id="nickname" name="nickname" required
+           th:value="${nickname}" type="text">
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="password">パスワード</label>
+    <input class="form-control" id="password" name="password" required
+           th:value="${password}" type="text">
+  </div>
+  <div class="mb-3">
+    <input class="btn btn-primary" type="submit" value="変更する">
+  </div>
+</form>
+
+<form method="get" th:action="@{/user/enter}">
+  <input name="uid" th:value="${uid}" type="hidden">
+  <input class="btn btn-secondary" type="submit" value="戻る">
+</form>
+
+</body>
+</html>

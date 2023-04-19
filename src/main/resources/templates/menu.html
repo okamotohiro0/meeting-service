@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>会議登録</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body class="m-3">
+
+    <h1>[[${nickname}]]さん、ご自由に会議を開催してください！</h1>
+
+    
+    <img th:src="@{/img/OIP.jpg}" width="200px">
+
+
+<form class="mb-3" method="get" th:action="@{/user/__${uid}__/information}">
+    <input class="btn btn-secondary" type="submit" value="ユーザ情報へ">
+  </form>
+
+  <form class="mb-3" method="get" th:action="@{/__${uid}__/friend}">
+    <input class="btn btn-secondary" type="submit" value="友達リスト">
+  </form> 
+
+
+  <form class="mb-3" method="get" th:action="@{/__${uid}__/meeting}">
+    <input class="btn btn-secondary" type="submit" value="会議を組む">
+  </form> 
+
+
+
+  
+
+</body>
+</html>    

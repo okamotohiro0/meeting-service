@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>会議生成サービス</title>
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="../css/index.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+</head>
+<body class="m-3">
+
+<h1>会議生成サービス</h1>
+
+
+
+<h2 th:if="${isUserDoesNotExistError}" class="text-danger">ユーザが見つかりません</h2>
+<h2 th:if="${isUidValidationError}" class="text-danger">ユーザIDに異常があります</h2>
+
+   <img src="img/o0800056614533377554.webp" width="300px">
+
+<form class="mb-3 row g-3 ro-cols-auto" method="get" th:action="@{/user/enter}">
+  <input class="form-control col" name="uid" pattern="[0-9a-zA-Z_\\-]+" placeholder="ID"
+         required type="text">
+
+  <input class="form-control col" name="password" placeholder="パスワード"
+         required type="text">
+  <button class="custom-btn btn-11"  type="submit"><span>Click!</span><span>Read More</span></button>
+  <button class="custom-btn btn-1">Read More</button>
+
+</form>
+
+<h2 class="mb-3">または</h2>
+
+<form method="get" th:action="@{/user/signup}">
+  <input class="btn btn-primary" type="submit" value="新規登録">
+</form>
+
+</body>
+</html>
